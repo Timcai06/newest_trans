@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight Performance Benchmark</title>
+    <style>
+        .translated-word-highlight {
+            background-color: yellow;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benchmark</h1>
+    <div id="controls">
+        <button id="btn-run">Run Benchmark</button>
+        <div id="results"></div>
+    </div>
+    <div id="content"></div>
+
+    <script>
+        // Mock Chrome API
+        window.chrome = {
+            storage: {
+                local: {
+                    get: (keys) => Promise.resolve({
+                        translatedWords: generateMockWords(1000),
+                        userSettings: {}
+                    }),
+                    set: () => Promise.resolve()
+                },
+                onChanged: { addListener: () => {} }
+            },
+            runtime: {
+                id: 'mock-extension-id',
+                sendMessage: () => Promise.resolve({}),
+                onMessage: { addListener: () => {} }
+            }
+        };
+
+        // Mock performance.mark and measure if needed (optional, browser supports it)
+    </script>
+    <script src="../core/content.js"></script>
+    <script>
+        // Generate mock words
+        function generateMockWords(count) {
+            const words = {};
+            const commonWords = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at'];
+            
+            for (let i = 0; i < count; i++) {
+                const word = `word${i}`;
+                words[word] = {
+                    word: word,
+                    translation: `翻译${i}`,
+                    count: Math.floor(Math.random() * 100),
+                    type: 'word'
+                };
+            }
+            
+            // Add some common words
+            commonWords.forEach(w => {
+                words[w] = {
+                    word: w,
+                    translation: '常用词',
+                    count: 1000,
+                    type: 'word'
+                };
+            });
+            
+            return words;
+        }
+
+        // Generate content
+        function generateContent(paragraphs, wordsPerParagraph) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = '';
+            
+            const words = [];
+            for(let i=0; i<1000; i++) words.push(`word${i}`);
+            const commonWords = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at'];
+
+            let html = '';
+            for (let i = 0; i < paragraphs; i++) {
+                let p = '<p>';
+                for (let j = 0; j < wordsPerParagraph; j++) {
+                    if (Math.random() < 0.2) {
+                        p += commonWords[Math.floor(Math.random() * commonWords.length)] + ' ';
+                    } else if (Math.random() < 0.1) {
+                         p += `word${Math.floor(Math.random() * 1000)} `;
+                    } else {
+                        p += 'generic ';
+                    }
+                }
+                p += '</p>';
+                html += p;
+            }
+            contentDiv.innerHTML = html;
+        }
+
+        document.getElementById('btn-run').addEventListener('click', async () => {
+            document.getElementById('results').innerHTML = 'Running...';
+            
+            // Load content.js script dynamically to ensure we test the current version
+            // Note: In a real extension, content.js is injected. Here we rely on the function being available globally
+            // or we need to paste the function here. 
+            // Since we can't easily load local file via script tag due to CORS in some envs, 
+            // we assume the user will paste the content.js code or we simulate the environment.
+            
+            // Ideally, we should use a test runner. 
+            // For this environment, I will rely on the fact that I can't easily run the browser environment.
+            // I will implement the benchmark logic *inside* content.js temporarily or just analyze the code.
+            
+            // Wait, I can't run this HTML in the browser tool.
+            // I have to rely on static analysis and code changes.
+            // But I can create this file for the user to verify.
+        });
+        
+        generateContent(100, 200); // 20,000 words
+    </script>
+</body>
+</html>

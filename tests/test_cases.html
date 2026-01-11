@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谷歌翻译插件 - 本地测试用例</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            border-bottom: 2px solid #4285f4;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .case-desc {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+            background: #fff;
+            padding: 10px;
+            border-left: 4px solid #4285f4;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .nested-style span {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>谷歌翻译插件测试页面</h1>
+    <p>请在此页面测试插件的划词翻译、高亮显示及交互一致性。</p>
+
+    <section id="tc-01">
+        <h2>TC-01: 基础单词测试</h2>
+        <div class="case-desc">操作：双击或划选以下单词。预期：显示翻译弹窗，单词变高亮。</div>
+        <p>
+            Hello world. This is a simple test. <br>
+            Please translate the word <strong>algorithm</strong> and <strong>function</strong>.
+        </p>
+    </section>
+
+    <section id="tc-02">
+        <h2>TC-02: 嵌套标签与样式</h2>
+        <div class="case-desc">操作：划选包含不同样式的短语。预期：高亮不应破坏原有 DOM 结构或样式。</div>
+        <p class="nested-style">
+            This is a <span>complex structure</span> test.<br>
+            We are testing <i>italic text</i> and <b>bold text</b> integration.
+        </p>
+    </section>
+
+    <section id="tc-03">
+        <h2>TC-03: 长句翻译</h2>
+        <div class="case-desc">操作：划选整句。预期：显示整句翻译，不显示音标/词性。</div>
+        <p>
+            The quick brown fox jumps over the lazy dog. <br>
+            Artificial intelligence is transforming the way we live and work, bringing both opportunities and challenges to society.
+        </p>
+    </section>
+
+    <section id="tc-04">
+        <h2>TC-04: 输入框测试 (负向测试)</h2>
+        <div class="case-desc">操作：在输入框内选中文本。预期：**不应**触发翻译弹窗。</div>
+        <textarea rows="4" style="width: 100%; padding: 10px;">Select this text inside the textarea. The translation popup should NOT appear.</textarea>
+        <br><br>
+        <input type="text" value="Select this text inside input" style="width: 100%; padding: 10px;">
+    </section>
+
+    <section id="tc-05">
+        <h2>TC-05: 多义词与 AI 语境</h2>
+        <div class="case-desc">操作：分别翻译下列句子中的 "bank"。预期：AI 模式下应能区分语义。</div>
+        <ul>
+            <li>I sat by the river <strong>bank</strong> watching the water flow. (河岸)</li>
+            <li>I need to go to the <strong>bank</strong> to withdraw some money. (银行)</li>
+        </ul>
+    </section>
+
+    <section id="tc-06">
+        <h2>TC-06: 特殊字符与代码</h2>
+        <div class="case-desc">操作：测试带有特殊符号的文本。</div>
+        <p>
+            Status: state-of-the-art technology.<br>
+            File format: application/json.<br>
+            Price: $19.99 vs €15.00.
+        </p>
+    </section>
+
+    <section id="tc-07">
+        <h2>TC-07: 右键快捷翻译 (新增)</h2>
+        <div class="case-desc">操作：选中文本后点击鼠标右键。预期：不显示浏览器默认菜单，而是直接触发翻译弹窗。</div>
+        <p>
+            Right-click on this <strong>selection</strong> to translate immediately.<br>
+            Also try selecting this sentence and right-clicking.
+        </p>
+    </section>
+
+    <section id="tc-08">
+        <h2>TC-08: 首次引导流程 (新增)</h2>
+        <div class="case-desc">
+            操作验证：<br>
+            1. 在插件设置中清除缓存或重新安装插件。<br>
+            2. 首次打开插件弹窗（Popup），应看到全屏引导页。<br>
+            3. 验证 "不再显示" 勾选后，再次打开不再出现引导页。
+        </div>
+    </section>
+
+</body>
+</html>

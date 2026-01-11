@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件视觉测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body.light-theme {
+            background-color: #ffffff;
+            color: #333333;
+        }
+        
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .dark-theme .header {
+            border-bottom-color: #333333;
+        }
+        
+        .theme-toggle {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .dark-theme .theme-toggle {
+            background-color: #2196F3;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .dark-theme .test-section {
+            border-color: #333333;
+        }
+        
+        .test-section h2 {
+            margin-top: 0;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .component-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .dark-theme .component-item {
+            border-color: #333333;
+        }
+        
+        /* 模拟组件样式 */
+        .mock-button {
+            padding: 8px 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .mock-button.primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .mock-button.secondary {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .mock-card {
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .dark-theme .mock-card {
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+        }
+        
+        .mock-input {
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        
+        .dark-theme .mock-input {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="container">
+        <div class="header">
+            <h1>组件视觉测试</h1>
+            <button class="theme-toggle" onclick="toggleTheme()">切换到深色主题</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>1. 基础组件</h2>
+            <div class="component-grid">
+                <div class="component-item">
+                    <h3>按钮组件</h3>
+                    <button class="mock-button primary">主要按钮</button>
+                    <button class="mock-button secondary">次要按钮</button>
+                    <button class="mock-button" disabled>禁用按钮</button>
+                </div>
+                <div class="component-item">
+                    <h3>卡片组件</h3>
+                    <div class="mock-card">
+                        <h4>示例卡片</h4>
+                        <p>这是一个卡片组件的示例内容</p>
+                    </div>
+                </div>
+                <div class="component-item">
+                    <h3>输入框组件</h3>
+                    <input type="text" class="mock-input" placeholder="普通输入框">
+                    <input type="text" class="mock-input" value="已输入内容" disabled>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>2. 复合组件</h2>
+            <div class="component-grid">
+                <div class="component-item">
+                    <h3>翻译记录卡片</h3>
+                    <div class="mock-card">
+                        <h4>WordCard示例</h4>
+                        <p><strong>单词：</strong>example</p>
+                        <p><strong>翻译：</strong>例子</p>
+                        <p><strong>音标：</strong>/ɪɡˈzɑːmpl/</p>
+                    </div>
+                </div>
+                <div class="component-item">
+                    <h3>统计卡片</h3>
+                    <div class="mock-card">
+                        <h4>StatCard示例</h4>
+                        <p><strong>已翻译单词：</strong>1,234</p>
+                        <p><strong>学习时长：</strong>24.5小时</p>
+                    </div>
+                </div>
+                <div class="component-item">
+                    <h3>学习面板</h3>
+                    <div class="mock-card">
+                        <h4>LearningPanel示例</h4>
+                        <p>学习模式选择：</p>
+                        <button class="mock-button primary">单词模式</button>
+                        <button class="mock-button">句子模式</button>
+                        <button class="mock-button">听力模式</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>3. 业务组件</h2>
+            <div class="component-grid">
+                <div class="component-item">
+                    <h3>搜索栏组件</h3>
+                    <div class="mock-card">
+                        <h4>SearchBar示例</h4>
+                        <div style="display: flex; align-items: center;">
+                            <input type="text" class="mock-input" placeholder="搜索单词或句子">
+                            <button class="mock-button primary">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-item">
+                    <h3>设置面板</h3>
+                    <div class="mock-card">
+                        <h4>SettingsPanel示例</h4>
+                        <p>设置选项：</p>
+                        <label><input type="checkbox"> 自动翻译</label><br>
+                        <label><input type="checkbox"> 高亮显示</label><br>
+                        <label><input type="checkbox"> 启用AI翻译</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>4. 内容脚本组件</h2>
+            <div class="component-grid">
+                <div class="component-item">
+                    <h3>悬浮翻译弹窗</h3>
+                    <div class="mock-card">
+                        <h4>TranslationFloatingPopup示例</h4>
+                        <p>这是一个模拟的悬浮翻译弹窗，用于展示翻译结果。</p>
+                        <p><strong>原文：</strong>Hello World</p>
+                        <p><strong>翻译：</strong>你好，世界</p>
+                    </div>
+                </div>
+                <div class="component-item">
+                    <h3>上下文菜单</h3>
+                    <div class="mock-card">
+                        <h4>ContextMenu示例</h4>
+                        <p>右键点击以下文本测试上下文菜单：</p>
+                        <p style="border: 1px solid #ccc; padding: 10px; cursor: context-menu;">右键点击我</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换主题函数
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (body.classList.contains('light-theme')) {
+                // 切换到深色主题
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '切换到浅色主题';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                // 切换到浅色主题
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.textContent = '切换到深色主题';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
+        // 初始化主题
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从localStorage获取主题设置
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+                body.classList.remove('light-theme');
+                themeToggle.textContent = '切换到浅色主题';
+            } else {
+                body.classList.add('light-theme');
+                body.classList.remove('dark-theme');
+                themeToggle.textContent = '切换到深色主题';
+            }
+        });
+    </script>
+</body>
+</html>

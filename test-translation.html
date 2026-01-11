@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻译功能测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .test-button:hover {
+            background: #45a049;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .test-text {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>翻译功能测试页面</h1>
+    
+    <div class="test-section">
+        <h2>基础功能测试</h2>
+        <p>选择下面的文本进行翻译测试：</p>
+        <div class="test-text">
+            Hello world! This is a test paragraph for translation functionality. 
+            You can select any word or phrase to translate it. 
+            The translation should appear when you select text and press Enter or Space.
+        </div>
+        
+        <button class="test-button" onclick="testBasicTranslation()">测试基础翻译</button>
+        <button class="test-button" onclick="testTextSelection()">测试文本选择</button>
+        <button class="test-button" onclick="testHighlight()">测试高亮功能</button>
+        <button class="test-button" onclick="showDebugInfo()">显示调试信息</button>
+        
+        <div id="status"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>性能测试</h2>
+        <p>运行性能测试来检查优化效果：</p>
+        <button class="test-button" onclick="runPerformanceTest()">运行性能测试</button>
+        <div id="performance-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>使用说明</h2>
+        <ul>
+            <li><strong>文本选择翻译：</strong> 选择任意文本，按 Enter 或空格键触发翻译</li>
+            <li><strong>右键翻译：</strong> 选择文本后右键点击</li>
+            <li><strong>高亮点击：</strong> 点击已高亮的单词查看详情</li>
+            <li><strong>性能监控：</strong> 点击右上角 📊 图标查看性能面板</li>
+            <li><strong>快捷键：</strong> Ctrl+Shift+P 打开/关闭性能监控</li>
+        </ul>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            
+            // 3秒后清除状态
+            setTimeout(() => {
+                statusDiv.textContent = '';
+                statusDiv.className = 'status';
+            }, 3000);
+        }
+
+        function testBasicTranslation() {
+            showStatus('正在测试基础翻译功能...', 'info');
+            
+            if (window.debugTranslation) {
+                window.debugTranslation.testTranslation()
+                    .then(() => showStatus('基础翻译测试完成', 'success'))
+                    .catch(err => showStatus(`翻译测试失败: ${err.message}`, 'error'));
+            } else {
+                showStatus('调试功能未加载，请刷新页面重试', 'error');
+            }
+        }
+
+        function testTextSelection() {
+            showStatus('正在测试文本选择功能...', 'info');
+            
+            if (window.debugTranslation) {
+                window.debugTranslation.testTextSelection();
+                showStatus('文本选择测试完成，请查看控制台', 'success');
+            } else {
+                showStatus('调试功能未加载，请刷新页面重试', 'error');
+            }
+        }
+
+        function testHighlight() {
+            showStatus('正在测试高亮功能...', 'info');
+            
+            if (window.debugTranslation) {
+                window.debugTranslation.testHighlight()
+                    .then(() => showStatus('高亮测试完成', 'success'))
+                    .catch(err => showStatus(`高亮测试失败: ${err.message}`, 'error'));
+            } else {
+                showStatus('调试功能未加载，请刷新页面重试', 'error');
+            }
+        }
+
+        function showDebugInfo() {
+            if (window.debugTranslation) {
+                window.debugTranslation.checkStatus();
+                showStatus('调试信息已输出到控制台', 'success');
+            } else {
+                showStatus('调试功能未加载', 'error');
+            }
+        }
+
+        function runPerformanceTest() {
+            showStatus('正在运行性能测试...', 'info');
+            
+            if (window.highlightPerformanceTest) {
+                window.highlightPerformanceTest.runPerformanceTest()
+                    .then(() => showStatus('性能测试完成', 'success'))
+                    .catch(err => showStatus(`性能测试失败: ${err.message}`, 'error'));
+            } else {
+                showStatus('性能测试功能未加载', 'error');
+            }
+        }
+
+        // 页面加载完成后的检查
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (window.debugTranslation) {
+                    showStatus('翻译功能已加载，可以开始测试', 'success');
+                } else {
+                    showStatus('翻译功能未完全加载，请检查插件', 'error');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
