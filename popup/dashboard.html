@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习Dashboard</title>
+    <link rel="stylesheet" href="../components/styles/reset.css">
+    <link rel="stylesheet" href="../components/styles/variables.css">
+    <link rel="stylesheet" href="../components/styles/utils.css">
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Dashboard 布局容器 -->
+    <div id="dashboard-layout" class="dashboard-layout">
+        <!-- 顶部导航栏 -->
+        <header id="dashboard-header" class="dashboard-header">
+            <div class="header-left">
+                <button id="sidebar-toggle" class="sidebar-toggle-btn">
+                    <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <h1 class="dashboard-title">学习Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <button id="home-btn" class="home-btn">
+                    <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- 侧边栏 -->
+        <aside id="dashboard-sidebar" class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item active">
+                        <a href="#overview" class="nav-link">
+                            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="9"></rect>
+                                <rect x="14" y="3" width="7" height="5"></rect>
+                                <rect x="14" y="12" width="7" height="9"></rect>
+                                <rect x="3" y="16" width="7" height="5"></rect>
+                            </svg>
+                            <span class="nav-text">学习概览</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#records" class="nav-link">
+                            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="12" x2="11" y2="12"></line>
+                                <polygon points="22 12 15 21 9 3 2 12"></polygon>
+                            </svg>
+                            <span class="nav-text">学习记录</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#modes" class="nav-link">
+                            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            <span class="nav-text">学习模式</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#stats" class="nav-link">
+                            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                            <span class="nav-text">数据统计</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#goals" class="nav-link">
+                            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span class="nav-text">学习目标</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main id="dashboard-main" class="dashboard-main">
+            <!-- 内容区域 -->
+            <div id="dashboard-content" class="dashboard-content">
+                <!-- 学习概览 -->
+                <section id="overview" class="content-section active">
+                    <h2 class="section-title">学习概览</h2>
+                    <div class="stats-grid">
+                        <!-- 统计卡片将通过JavaScript动态生成 -->
+                    </div>
+                    <div class="charts-grid">
+                        <!-- 图表将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+
+                <!-- 学习记录 -->
+                <section id="records" class="content-section">
+                    <h2 class="section-title">学习记录</h2>
+                    
+                    <!-- 学习记录筛选和搜索 -->
+                    <div class="records-filter">
+                        <div class="search-box">
+                            <input type="text" id="recordsSearch" placeholder="搜索学习记录...">
+                            <button id="searchBtn">
+                                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="filter-options">
+                            <select id="filterMode">
+                                <option value="all">所有模式</option>
+                                <option value="flashcard">闪卡模式</option>
+                                <option value="quiz">测验模式</option>
+                                <option value="spelling">拼写模式</option>
+                            </select>
+                            
+                            <select id="filterDifficulty">
+                                <option value="all">所有难度</option>
+                                <option value="easy">简单</option>
+                                <option value="medium">中等</option>
+                                <option value="difficult">困难</option>
+                            </select>
+                            
+                            <select id="filterCorrectness">
+                                <option value="all">所有结果</option>
+                                <option value="correct">正确</option>
+                                <option value="incorrect">错误</option>
+                            </select>
+                            
+                            <select id="filterType">
+                                <option value="all">所有类型</option>
+                                <option value="word">单词</option>
+                                <option value="phrase">短语</option>
+                                <option value="sentence">句子</option>
+                            </select>
+                        </div>
+                        
+                        <div class="export-options">
+                            <button id="exportCsv">导出CSV</button>
+                            <button id="exportJson">导出JSON</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习记录列表 -->
+                    <div id="recordsList" class="records-list">
+                        <!-- 学习记录列表将通过JavaScript动态生成 -->
+                    </div>
+                    
+                    <!-- 分页控件 -->
+                    <div id="pagination" class="pagination">
+                        <button id="prevPage" disabled>上一页</button>
+                        <span id="pageInfo">第 1 页，共 1 页</span>
+                        <button id="nextPage" disabled>下一页</button>
+                    </div>
+                </section>
+
+                <!-- 学习模式 -->
+                <section id="modes" class="content-section">
+                    <h2 class="section-title">学习模式</h2>
+                    <div class="modes-grid">
+                        <!-- 学习模式卡片将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+
+                <!-- 数据统计 -->
+                <section id="stats" class="content-section">
+                    <h2 class="section-title">数据统计</h2>
+                    <div class="stats-container">
+                        <!-- 数据统计图表将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+
+                <!-- 学习目标 -->
+                <section id="goals" class="content-section">
+                    <h2 class="section-title">学习目标</h2>
+                    <div class="goals-container">
+                        <!-- 学习目标设置将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- 引入必要的JavaScript文件 -->
+    <script src="../components/utils/event-bus.js"></script>
+    <script src="../components/utils/BaseComponent.js"></script>
+    <script src="../components/utils/component-registry.js"></script>
+    <script src="../components/utils/style-manager.js"></script>
+    <script src="../components/charts/base-chart.js"></script>
+    <script src="../components/charts/line-chart.js"></script>
+    <script src="../components/charts/pie-chart.js"></script>
+    <script src="../components/charts/bar-chart.js"></script>
+    <script src="../components/charts/radar-chart.js"></script>
+    <script src="modules/page-manager.js"></script>
+    <script src="modules/dashboard-manager.js"></script>
+    <script src="modules/learning-manager.js"></script>
+    <script src="modules/goal-manager.js"></script>
+    <script src="components/learning-mode-selector.js"></script>
+    <script src="components/goal-setting.js"></script>
+    <script src="popup-components.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

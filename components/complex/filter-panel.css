@@ -1,0 +1,661 @@
+/**
+ * Filter Panel Component Styles
+ * 筛选面板组件样式 - iOS风格底部弹出
+ * 支持浅色和深色两种主题
+ */
+
+/* ==================== */
+/* 遮罩层样式 */
+/* ==================== */
+
+.filter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 深色主题遮罩 */
+body.theme-dark .filter-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* ==================== */
+/* 筛选面板容器 */
+/* ==================== */
+
+.filter-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 70vh;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(249, 250, 251, 0.95));
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 24px 24px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: none;
+  box-shadow:
+    0 -10px 40px rgba(0, 0, 0, 0.1),
+    0 -2px 8px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-panel.active {
+  transform: translateY(0);
+}
+
+/* 深色主题面板 */
+body.theme-dark .filter-panel {
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.95));
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow:
+    0 -10px 40px rgba(0, 0, 0, 0.5),
+    0 -2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(167, 139, 250, 0.2);
+}
+
+/* ==================== */
+/* 面板头部 */
+/* ==================== */
+
+.filter-header {
+  padding: 16px 20px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+/* 顶部拖动条 */
+.filter-header::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+body.theme-dark .filter-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark .filter-header::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.filter-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+body.theme-dark .filter-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.theme-dark .filter-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ==================== */
+/* 面板内容区域 */
+/* ==================== */
+
+.filter-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.filter-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+body.theme-dark .filter-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== */
+/* 筛选分组 */
+/* ==================== */
+
+.filter-section {
+  margin-bottom: 28px;
+}
+
+.filter-section:last-child {
+  margin-bottom: 0;
+}
+
+.filter-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==================== */
+/* 视图选择按钮 */
+/* ==================== */
+
+.filter-view-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.filter-view-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 8px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-view-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.filter-view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.filter-view-btn:hover::before {
+  opacity: 1;
+}
+
+.filter-view-btn.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-color: transparent;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.filter-view-btn .icon-svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-view-btn span {
+  font-size: 12px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* 深色主题视图按钮 */
+body.theme-dark .filter-view-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+body.theme-dark .filter-view-btn:hover {
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+}
+
+body.theme-dark .filter-view-btn.active {
+  background: linear-gradient(135deg, #a78bfa, #c084fc);
+  box-shadow: 0 4px 16px rgba(167, 139, 250, 0.4);
+}
+
+/* 深色主题下视图按钮图标颜色 */
+body.theme-dark .filter-view-btn .icon-svg {
+  stroke: white;
+}
+
+/* ==================== */
+/* 排序选项 */
+/* ==================== */
+
+.filter-sort-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-sort-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-sort-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateX(4px);
+}
+
+.filter-sort-item.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+.filter-sort-radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.filter-sort-item.active .filter-sort-radio {
+  border-color: #667eea;
+  background: #667eea;
+}
+
+.filter-sort-item.active .filter-sort-radio::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+}
+
+.filter-sort-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* 深色主题排序选项 */
+body.theme-dark .filter-sort-item {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.theme-dark .filter-sort-item:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+body.theme-dark .filter-sort-item.active {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(192, 132, 252, 0.15));
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+body.theme-dark .filter-sort-item.active .filter-sort-radio {
+  border-color: #a78bfa;
+  background: #a78bfa;
+}
+
+/* ==================== */
+/* 首字母筛选 */
+/* ==================== */
+
+.filter-letters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.filter-letters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-letter-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-letter-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.filter-letter-btn.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-color: transparent;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* "全部" 和 "#" 按钮特殊样式 */
+.filter-letter-btn.all {
+  width: 48px;
+  font-size: 13px;
+}
+
+/* 深色主题字母按钮 */
+body.theme-dark .filter-letter-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark .filter-letter-btn:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+body.theme-dark .filter-letter-btn.active {
+  background: linear-gradient(135deg, #a78bfa, #c084fc);
+  box-shadow: 0 2px 8px rgba(167, 139, 250, 0.3);
+}
+
+/* ==================== */
+/* 词性筛选 */
+/* ==================== */
+
+.filter-pos-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.filter-pos-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 词性渐变色彩装饰（左侧条） */
+.filter-pos-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.filter-pos-item[data-pos="noun"]::before {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.filter-pos-item[data-pos="verb"]::before {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+.filter-pos-item[data-pos="adjective"]::before {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.filter-pos-item[data-pos="adverb"]::before {
+  background: linear-gradient(135deg, #ff9f40, #ffcd56);
+}
+
+.filter-pos-item[data-pos="pronoun"]::before {
+  background: linear-gradient(135deg, #48bb78, #4299e1);
+}
+
+.filter-pos-item[data-pos="preposition"]::before {
+  background: linear-gradient(135deg, #a78bfa, #f973e1);
+}
+
+.filter-pos-item[data-pos="conjunction"]::before {
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+}
+
+.filter-pos-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(4px);
+}
+
+.filter-pos-item:hover::before {
+  opacity: 0.5;
+}
+
+.filter-pos-item.active {
+  border-color: transparent;
+  transform: translateX(4px);
+}
+
+.filter-pos-item.active::before {
+  opacity: 1;
+}
+
+.filter-pos-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.filter-pos-item.active .filter-pos-checkbox {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.filter-pos-item.active .filter-pos-checkbox::after {
+  content: '✓';
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.filter-pos-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* 深色主题词性选项 */
+body.theme-dark .filter-pos-item {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.theme-dark .filter-pos-item:hover {
+  background: rgba(30, 41, 59, 0.8);
+}
+
+body.theme-dark .filter-pos-item.active .filter-pos-checkbox {
+  background: #a78bfa;
+  border-color: #a78bfa;
+}
+
+/* ==================== */
+/* 底部操作按钮 */
+/* ==================== */
+
+.filter-actions {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.theme-dark .filter-actions {
+  background: rgba(15, 23, 42, 0.9);
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.filter-reset-btn,
+.filter-apply-btn {
+  flex: 1;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.filter-reset-btn {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+}
+
+.filter-reset-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-apply-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.filter-apply-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+/* 深色主题按钮 */
+body.theme-dark .filter-reset-btn {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.theme-dark .filter-reset-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+body.theme-dark .filter-apply-btn {
+  background: linear-gradient(135deg, #a78bfa, #c084fc);
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+}
+
+body.theme-dark .filter-apply-btn:hover {
+  box-shadow: 0 6px 16px rgba(167, 139, 250, 0.4);
+}
+
+/* ==================== */
+/* 响应式设计 */
+/* ==================== */
+
+@media (max-width: 520px) {
+  .filter-panel {
+    max-height: 80vh;
+  }
+
+  .filter-view-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-pos-options {
+    grid-template-columns: 1fr;
+  }
+}
